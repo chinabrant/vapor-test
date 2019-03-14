@@ -27,6 +27,10 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     // Configure migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Todo.self, database: .sqlite)
+    // 告诉Fluent在app启动的时候创建表
+    // Fluent支持在一个app中实现多种数据库，所以这里要为model指定要使用的数据库
+    // Migration只会运行一次，一旦运行过，不会再执行。Fluent不会尝试创建已经存在的表
+    // 改变了model怎么办？？
+    migrations.add(model: Acronym.self, database: .sqlite)
     services.register(migrations)
 }
